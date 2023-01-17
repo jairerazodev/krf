@@ -21,6 +21,63 @@ Un ejemplo de manifiesto para un Pod que contiene una instancia de Redis, una ap
 
 Este es un ejemplo sencillo de como se podría ver la aplicación.
 
+    # main.py
+
+    import json
+    from typing import List
+
+    from fastapi import FastAPI, HTTPException, Request
+    from pydantic import BaseModel
+    from redis import Redis
+
+    app = FastAPI()
+    redis = Redis(host='redis', port=6379)
+
+    class Task(BaseModel):
+        id: int
+        title: str
+        description: str
+        status: str
+
+    class TaskList(BaseModel):
+        id: int
+        tasks: List[Task]
+
+
+    @app.post("/tasks/")
+    def create_task(task: Task):
+        task_data = task.dict()
+        task_data['id'] = redis.incr('global:nextTaskId')
+        redis.hmset(f'task:{task_data["id"]}', task_data)
+        return task_data
+
+    @app.get("/tasks/")
+    def read_tasks():
+        task_keys = redis.keys('task:*')
+        tasks = []
+        for key in task_keys:
+            task = json.loads(redis.hgetall(key))
+            tasks.append(task)
+        return {"tasks": tasks}
+
+    @app.put("/tasks/{task_id}")
+    def update_task(task_id: int, task: Task):
+        task_data = task.dict()
+        task_data['id'] = task_id
+        redis.hmset(f'task:{task_id}', task_data)
+        return task_data
+
+    @app.delete("/tasks/{task_id}")
+    def delete_task(task_id: int):
+        redis.delete(f'task:{task_id}')
+        return {"message": "Task deleted"}
+
+    @app.get("/")
+    def read_root():
+        return {"Hello": "World"}
+
+>Scrapping
+
     import aioredis
     from fastapi import FastAPI
     from pydantic import BaseModel
