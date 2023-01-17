@@ -4,13 +4,13 @@ Kubernetes para un Pod que contiene una instancia de Redis, una aplicación desa
 
 >Aplicación
 
-   `import aioredis
+    import aioredis
     from fastapi import FastAPI
     from pydantic import BaseModel
     from typing import List
     from scrapy import Spider
     from scrapy.crawler import CrawlerProcess
-
+    
     app = FastAPI()
 
     class RequestData(BaseModel):
@@ -39,6 +39,6 @@ Kubernetes para un Pod que contiene una instancia de Redis, una aplicación desa
         process.start()
 
         response = generate_response(intention, value)
-        return {"response": response}`
+        return {"response": response}
     
 En este ejemplo, se ha añadido un try except para capturar cualquier posible excepción generada al intentar conectarse al contenedor de Redis y se ha puesto un mensaje de error para el usuario si no se puede conectar. Se ha agregado un ejemplo de uso de scrapy para extraer información de una url.
