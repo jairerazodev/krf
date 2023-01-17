@@ -1,5 +1,7 @@
 # fastapicrudtest
 
+Aquí te muestro un ejemplo completo de código que implementa una conexión a un contenedor Docker con Redis (SQLAlchemy... funciona con cualquier base de datos) como base de datos y la lógica necesaria para conectar con esta base de datos a través de FastAPI con el estándar OpenAPI:
+
 + Crear una nueva carpeta para el proyecto, por ejemplo "my_project" y crear un virtual environment en ella.
 + Instalar FastAPI y los paquetes necesarios para trabajar con bases de datos, como por ejemplo SQLAlchemy.
 + Crear un archivo main.py en la carpeta del proyecto y en él, importar las librerías necesarias.
@@ -11,7 +13,7 @@
 + Crear una función llamada delete_task que utilizará el decorador @delete para recibir una petición delete y eliminar una tarea existente en la base de datos.
 + Crear una función llamada main que utilizará el decorador @app.route para establecer la ruta principal de la aplicación y utilizará el método run() de FastAPI para iniciar el servidor.
 
->Crear una nueva carpeta para el proyecto y crear un virtual environment en ella:*
+>Crear una nueva carpeta para el proyecto y crear un virtual environment en ella:
 
     # Crear la carpeta "my_project"
     !mkdir my_project
@@ -125,6 +127,8 @@
     @app.get("/")
     def read_root():
         return {"Hello": "World"}
+        
+## Pruebas - Testing
 
 Si quieres manejar el caso en el que se intenta actualizar una tarea que no existe en la base de datos, puedes utilizar una sentencia try-except para capturar una excepción KeyError y retornar una respuesta de error al cliente.
 
