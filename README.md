@@ -23,15 +23,18 @@ Kubernetes para un Pod que contiene una instancia de Redis, una aplicación desa
 
         try:
             # Conectarse a la base de datos Redis en el pod
+            
             redis = await aioredis.create_redis(('redis-svc', 6379))
 
             # Consultar un valor en la base de datos
+            
             value = await redis.get("key")
         except Exception as e:
             print(f'Error connecting to redis: {e}')
             return {"response": "Error connecting to the database"}
 
         # Crear una instancia de scrapy y ejecutarlo
+        
         process = CrawlerProcess({
             'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
         })
