@@ -11,34 +11,34 @@
 + Crear una función llamada delete_task que utilizará el decorador @delete para recibir una petición delete y eliminar una tarea existente en la base de datos.
 + Crear una función llamada main que utilizará el decorador @app.route para establecer la ruta principal de la aplicación y utilizará el método run() de FastAPI para iniciar el servidor.
 
-*Crear una nueva carpeta para el proyecto y crear un virtual environment en ella:*
+>Crear una nueva carpeta para el proyecto y crear un virtual environment en ella:*
 
-  # Crear la carpeta "my_project"
-  !mkdir my_project
+    # Crear la carpeta "my_project"
+    !mkdir my_project
 
-  # Moverse a la carpeta creada
-  %cd my_project
+    # Moverse a la carpeta creada
+    %cd my_project
 
-  # Crear un virtual environment con Python 3
-  !python3 -m venv env
+    # Crear un virtual environment con Python 3
+    !python3 -m venv env
   
-*Instalar FastAPI y los paquetes necesarios para trabajar con bases de datos, como por ejemplo SQLAlchemy:*
+>Instalar FastAPI y los paquetes necesarios para trabajar con bases de datos, como por ejemplo SQLAlchemy:
 
-  # Activar el virtual environment
-  !source env/bin/activate
+    # Activar el virtual environment
+    !source env/bin/activate
 
-  # Instalar FastAPI y SQLAlchemy
-  !pip install fastapi sqlalchemy
+    # Instalar FastAPI y SQLAlchemy
+    !pip install fastapi sqlalchemy
   
-*Crear un archivo main.py en la carpeta del proyecto y en él, importar las librerías necesarias:*
+>Crear un archivo main.py en la carpeta del proyecto y en él, importar las librerías necesarias:
 
-  # Crear el archivo main.py
-  !touch main.py
+    # Crear el archivo main.py
+    !touch main.py
 
-  # Abrir el archivo con un editor de texto
-  !nano main.py
+    # Abrir el archivo con un editor de texto
+    !nano main.py
 
-*main.py*
+>main.py
 
     # Importamos las librerias necesarias
     import json
@@ -128,21 +128,20 @@
 
 Si quieres manejar el caso en el que se intenta actualizar una tarea que no existe en la base de datos, puedes utilizar una sentencia try-except para capturar una excepción KeyError y retornar una respuesta de error al cliente.
 
-  `try:
-      task_data = task.dict()
-      task_data['id'] = task_id
-      redis.hmset(f'task:{task_id}', task_data)
-  except KeyError:
-      raise HTTPException(status_code=404, detail="Task not found")`
+    try:
+        task_data = task.dict()
+        task_data['id'] = task_id
+        redis.hmset(f'task:{task_id}', task_data)
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Task not found")
     
 Para validar los datos recibidos en las peticiones, puedes utilizar las clases Task y TaskList que ya has creado para definir los esquemas de los datos que esperas recibir. Pydantic se encargará de validar automáticamente los datos recibidos de acuerdo con esos esquemas, y retornará una respuesta de error si los datos no son válidos.
 
 Por otra parte, para realizar pruebas unitarias sobre estas funciones, puedes utilizar la librería Pytest. Un ejemplo de cómo podrías realizar pruebas para la función create_task podría ser el siguiente:
 
+Aquí te muestro algunos ejemplos de cómo podrías realizar pruebas para las demás funciones de tu aplicación de tareas usando Pytest:
 
-*Aquí te muestro algunos ejemplos de cómo podrías realizar pruebas para las demás funciones de tu aplicación de tareas usando Pytest:**
-
-  *test_main.py*
+>test_main.py
 
     def test_read_tasks(client):
         # Crea una tarea de prueba
