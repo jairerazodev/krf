@@ -1,8 +1,25 @@
 # Entorno de desarollo "KRF" Kubernetes, Redis, FastAPI para hacer web scrapping
 
-Kubernetes para un Pod que contiene una instancia de Redis, una aplicación desarrollada con FastAPI y Python, y un contenedor con Scrapy.
+Un ejemplo de manifiesto para un Pod que contiene una instancia de Redis, una aplicación desarrollada con FastAPI y Python, y un contenedor con Scrapy podría ser el siguiente:
+
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: my-pod
+    spec:
+      containers:
+      - name: redis
+        image: redis:latest
+      - name: web-app
+        image: my-web-app-image:latest
+        ports:
+        - containerPort: 8000
+      - name: scraper
+        image: my-scraper-image:latest
 
 >Aplicación
+
+Este es un ejemplo sencillo de como se podría ver la aplicación.
 
     import aioredis
     from fastapi import FastAPI
